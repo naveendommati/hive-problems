@@ -82,3 +82,49 @@ Step 6: Login to the new node like suhadoop or: ssh -X hadoop@192.168.1.103
 Step 7: Start HDFS of the newly added slave node by using the following command:./bin/hadoop-daemon.sh start data node
 Step 8: Check the output of the jps command on the new node
 
+10) Hive Join operations.
+Create a  table named CUSTOMERS(ID | NAME | AGE | ADDRESS   | SALARY)
+Create a Second  table ORDER(OID | DATE | CUSTOMER_ID | AMOUNT
+)?
+answer: --
+create table customer(id int, name string, age int, address string, salary int)
+row format delimited
+fields terminated by ','
+stored as textfile;
+create table order(id int, date date, customer_id int, amount int)
+row format delimited
+fields terminated by ',';
+
+select * from customer c INNER JOIN order o on c.id =o.id:
+select * from customer c left join order o on c.id= customer_id ;
+select * from customer c right join order o on c.id = customer_id ;
+select * from customer c full outer join order o ;
+
+11) Download a data from the given location - 
+https://archive.ics.uci.edu/ml/machine-learning-databases/00360/
+
+1. Create a hive table as per given schema in your dataset 
+create table airquality1(name string , code string, CO string, PT08_S1 int, NMHC smallint, C6H6 string, PT08_S2  int, NOx  smallint, PT08_S3  int, NO2  smallint, PT08_S4 int, PT08_S5 int, T string, RH string, AH string )
+row format delimited
+fields terminated by ';'
+tblproperties("skip.header.line.count" = "1");
+
+2. try to place a data into table location
+load data local inpath 'file:///config/workspace/quality' into table airquality1;
+
+3.Perform a select operation 
+select * from airquality1 limit 3;
+
+4. Fetch the result of the select operation in your local as a csv file .
+same records available with out null values.
+
+5. Perform group by operation 
+select name, sum(T) from airquality1 group by name;
+
+9. alter table operation 
+alter table airquality1 change T temperature string;
+
+10 . drop table operation
+drop table airquality1;
+
+
